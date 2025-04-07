@@ -41,7 +41,7 @@ while true
     enter = enter(1); % 下标最小的换入变量
 
     % 计算theta并选择出基变量
-    theta = table(2:m+1,1) ./ table(2:m+1,enter+1);
+    theta = (table(2:m+1,1)+1e-14) ./ table(2:m+1,enter+1);
     theta(theta < 0) = inf;
     exit = find(theta == min(theta));
 
@@ -84,12 +84,13 @@ end
 function print_table(t, basic_vars, n_vars)
 
     % 转换为分数格式
-    str_data = strings(size(t));
-    for i = 1:size(t,1)
-        for j = 1:size(t,2)
-            str_data(i,j) = rats(t(i,j)); 
-        end
-    end
+    str_data = t;
+%     str_data = strings(size(t));
+%     for i = 1:size(t,1)
+%         for j = 1:size(t,2)
+%             str_data(i,j) = rats(t(i,j),5); 
+%         end
+%     end
 
     % 生成列名
     col_names = ["b", strcat('x', string(1:n_vars))];
